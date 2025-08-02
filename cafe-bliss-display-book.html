@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Bliss - Display Book</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .book-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin: 40px 0;
+            overflow: hidden;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .page:nth-child(1) { animation-delay: 0.1s; }
+        .page:nth-child(2) { animation-delay: 0.2s; }
+        .page:nth-child(3) { animation-delay: 0.3s; }
+        .page:nth-child(4) { animation-delay: 0.4s; }
+        .page:nth-child(5) { animation-delay: 0.5s; }
+        .page:nth-child(6) { animation-delay: 0.6s; }
+        .page:nth-child(7) { animation-delay: 0.7s; }
+
+        /* Cover Page */
+        .cover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .cafe-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .coffee-icon {
+            font-size: 3rem;
+            margin: 20px 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Content Pages */
+        .content {
+            padding: 60px 40px;
+        }
+
+        .page-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        /* Menu Sections */
+        .menu-section {
+            margin: 40px 0;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .menu-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .menu-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .item-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .item-icon {
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        /* Combo Section */
+        .combo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .combo-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .combo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .combo-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .combo-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .combo-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .quote {
+            text-align: center;
+            font-style: italic;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin: 40px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cafe-name {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .content {
+                padding: 40px 20px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Decorative Elements */
+        .decorative-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+            margin: 30px 0;
+        }
+
+        .floating-icons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: rgba(255,255,255,0.3);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .floating-icons:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .floating-icons:nth-child(3) {
+            animation-delay: 2s;
+        }
+
+        /* Fix for potential CSS conflicts */
+        .page .cover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <!-- Cover Page -->
+        <div class="page cover">
+            <div class="floating-icons">☕</div>
+            <div class="floating-icons" style="top: 60px; right: 60px;">🧇</div>
+            <div class="floating-icons" style="top: 100px; right: 100px;">🍨</div>
+            
+            <div class="coffee-icon">☕</div>
+            <h1 class="cafe-name">Café Bliss</h1>
+            <p class="tagline">Sip. Scoop. Smile.</p>
+            <div class="coffee-icon">🌟</div>
+        </div>
+
+        <!-- Page 1: Introduction -->
+        <div class="page">
+            <div class="content">
+                <h2 class="page-title">Welcome to Café Bliss</h2>
+                <p class="intro-text">
+                    Step into a world where every sip tells a story and every bite brings joy. 
+                    Café Bliss is your cozy retreat for coffee lovers, dessert seekers, and casual hangouts. 
+                    Our warm, wood-toned interiors with ambient lighting create the perfect Instagrammable backdrop 
+                    for your memorable moments. Whether you're seeking a quiet corner to work, catching up with friends, 
+                    or simply indulging in life's sweet pleasures, we've crafted the perfect space just for you.
+                </p>
+                <div class="decorative-line"></div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <i class="fas fa-heart" style="color: #667eea; font-size: 2rem; margin: 0 10px;"></i>
+                    <i class="fas fa-coffee" style="color: #764ba2; font-size: 2rem; margin: 0 10px;"></i>
+                    <i class="fas fa-star" style="color: #667eea; font-size: 2rem; margin: 0 10px;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 2: Coffee Types -->
+        <div class="page">
+            <div class="content">
+                <h2 class="page-title">Our Coffee Collection</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 30px; font-style: italic;">
+                    "Every cup brewed with love and precision."
+                </p>
+                
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-coffee item-icon"></i>
+                            Espresso
+                        </div>
+                        <div class="item-description">
+                            Pure, intense coffee shot that awakens your senses with every sip.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-mug-hot item-icon"></i>
+                            Cappuccino
+                        </div>
+                        <div class="item-description">
+                            Perfectly balanced with equal parts espresso, steamed milk, and milk foam.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-coffee item-icon"></i>
+                            Latte
+                        </div>
+                        <div class="item-description">
+                            Smooth and creamy with espresso and steamed milk, topped with a light foam.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-mug-hot item-icon"></i>
+                            Mocha
+                        </div>
+                        <div class="item-description">
+                            Rich chocolate meets espresso, topped with whipped cream for the perfect treat.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-thermometer-half item-icon"></i>
+                            Cold Brew
+                        </div>
+                        <div class="item-description">
+                            Smooth, low-acid coffee brewed slowly for 12-24 hours over cold water.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-coffee item-icon"></i>
+                            Americano
+                        </div>
+                        <div class="item-description">
+                            Espresso diluted with hot water for a clean, bold coffee experience.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-ice-cream item-icon"></i>
+                            Affogato
+                        </div>
+                        <div class="item-description">
+                            Espresso poured over vanilla ice cream - a delightful coffee dessert.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3: Beverages -->
+        <div class="page">
+            <div class="content">
+                <h2 class="page-title">Cool Sips & Refreshments</h2>
+                
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-thermometer-empty item-icon"></i>
+                            Iced Coffee
+                        </div>
+                        <div class="item-description">
+                            Vanilla, Mocha - Chilled perfection for those warm days.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-glass-whiskey item-icon"></i>
+                            Milkshakes
+                        </div>
+                        <div class="item-description">
+                            Oreo, Chocolate, Strawberry - Thick, creamy, and absolutely irresistible.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-blender item-icon"></i>
+                            Smoothies
+                        </div>
+                        <div class="item-description">
+                            Berry Blast, Mango Dream - Fresh fruits blended to perfection.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-leaf item-icon"></i>
+                            Iced Teas
+                        </div>
+                        <div class="item-description">
+                            Lemon, Peach, Hibiscus - Refreshing and naturally sweetened.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-cocktail item-icon"></i>
+                            Mocktails
+                        </div>
+                        <div class="item-description">
+                            Mint Mojito, Blue Lagoon - Sophisticated non-alcoholic beverages.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 4: Ice Cream Menu -->
+        <div class="page">
+            <div class="content">
+                <h2 class="page-title">Chill Out with Our Scoops</h2>
+                
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-ice-cream item-icon"></i>
+                            Classic Flavors
+                        </div>
+                        <div class="item-description">
+                            Vanilla, Chocolate, Strawberry - Timeless favorites that never disappoint.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-crown item-icon"></i>
+                            Premium Flavors
+                        </div>
+                        <div class="item-description">
+                            Cookie Dough, Belgian Chocolate, Mango Sorbet - Elevated ice cream experience.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-birthday-cake item-icon"></i>
+                            Sundaes
+                        </div>
+                        <div class="item-description">
+                            Brownie Sundae, Nutty Delight, Berry Bash - Decadent creations with toppings galore.
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <i class="fas fa-ice-cream" style="color: #667eea; font-size: 1.5rem; margin: 0 5px;"></i>
+                    <i class="fas fa-cookie-bite" style="color: #764ba2; font-size: 1.5rem; margin: 0 5px;"></i>
+                    <i class="fas fa-star" style="color: #667eea; font-size: 1.5rem; margin: 0 5px;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 5: Waffles -->
+        <div class="page">
+            <div class="content">
+                <h2 class="page-title">Waffles to Melt Your Heart</h2>
+                
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-birthday-cake item-icon"></i>
+                            Classic Maple Waffle
+                        </div>
+                        <div class="item-description">
+                            Golden crispy waffle drizzled with pure maple syrup.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-heart item-icon"></i>
+                            Nutella Banana
+                        </div>
+                        <div class="item-description">
+                            Rich Nutella spread with fresh banana slices.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-crown item-icon"></i>
+                            Chocolate Overload
+                        </div>
+                        <div class="item-description">
+                            Chocolate chips, chocolate sauce, and chocolate sprinkles.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-ice-cream item-icon"></i>
+                            Waffle with Ice Cream
+                        </div>
+                        <div class="item-description">
+                            Warm waffle topped with your choice of ice cream.
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="item-title">
+                            <i class="fas fa-seedling item-icon"></i>
+                            Berry Cream Cheese Waffle
+                        </div>
+                        <div class="item-description">
+                            Fresh berries with cream cheese spread.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 6: Combo Offers -->
+        <div class="page">
+            <div class="content">
+                <h2 class="page-title">Blissful Combos</h2>
+                
+                <div class="combo-grid">
+                    <div class="combo-item">
+                        <div class="combo-title">☕ Coffee + 🧇 Waffle</div>
+                        <div class="combo-price">₹199</div>
+                        <div class="combo-description">Perfect morning combo</div>
+                    </div>
+                    
+                    <div class="combo-item">
+                        <div class="combo-title">🍨 Ice Cream + 🥤 Milkshake</div>
+                        <div class="combo-price">₹150</div>
+                        <div class="combo-description">Double the sweetness</div>
+                    </div>
+                    
+                    <div class="combo-item">
+                        <div class="combo-title">Family Pack Sundae</div>
+                        <div class="combo-price">₹399</div>
+                        <div class="combo-description">4 Scoops + 2 Waffles</div>
+                    </div>
+                    
+                    <div class="combo-item">
+                        <div class="combo-title">Student Special</div>
+                        <div class="combo-price">₹129</div>
+                        <div class="combo-description">Any Drink + Mini Waffle</div>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Because one treat is never enough..."
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <i class="fas fa-gift" style="color: #667eea; font-size: 2rem; margin: 0 10px;"></i>
+                    <i class="fas fa-heart" style="color: #764ba2; font-size: 2rem; margin: 0 10px;"></i>
+                    <i class="fas fa-star" style="color: #667eea; font-size: 2rem; margin: 0 10px;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling and some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to menu items
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add click effects to combo items
+            const comboItems = document.querySelectorAll('.combo-item');
+            comboItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1.05)';
+                    }, 150);
+                });
+            });
+
+            // Parallax effect for floating icons
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const floatingIcons = document.querySelectorAll('.floating-icons');
+                floatingIcons.forEach((icon, index) => {
+                    const speed = 0.5 + (index * 0.1);
+                    icon.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+
+            // Error handling for smooth animations
+            try {
+                // Ensure all animations work smoothly
+                const pages = document.querySelectorAll('.page');
+                pages.forEach((page, index) => {
+                    page.style.animationDelay = `${(index + 1) * 0.1}s`;
+                });
+            } catch (error) {
+                console.log('Animation setup completed');
+            }
+        });
+    </script>
+</body>
+</html> 
