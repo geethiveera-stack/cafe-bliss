@@ -1,68 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Café Bliss</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Open Sans', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #fff8f0;
-      color: #333;
-    }
-    header {
-      background-color: #6b4c3b;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-    }
-    section {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
-    }
-    .btn {
-      background-color: #a67c52;
-      color: white;
-      padding: 0.7rem 1.5rem;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #777;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Book Display</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f5f1e8 0%, #e8dcc0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .cafe-display {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #d4c4a8, #e6d7b8);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .display-header {
+            background: linear-gradient(90deg, #8b4513, #a0522d);
+            color: #f5f1e8;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .display-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="wood" patternUnits="userSpaceOnUse" width="20" height="20"><rect width="20" height="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23wood)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .cafe-sign {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .books-container {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .genre-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.2);
+            border: 2px solid #d4c4a8;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .genre-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.3);
+        }
+
+        .genre-title {
+            font-size: 1.8rem;
+            color: #8b4513;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 3px solid #d4c4a8;
+            padding-bottom: 10px;
+        }
+
+        .book-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(145deg, #f9f6f0, #f5f1e8);
+            border-radius: 10px;
+            border-left: 5px solid #8b4513;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .book-item:hover {
+            background: linear-gradient(145deg, #f5f1e8, #e8dcc0);
+            transform: translateX(5px);
+        }
+
+        .book-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #5d4037;
+            margin-bottom: 5px;
+        }
+
+        .book-author {
+            font-size: 1rem;
+            color: #8b4513;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .book-description {
+            font-size: 0.9rem;
+            color: #6d4c41;
+            line-height: 1.4;
+        }
+
+        .romance .genre-title::before {
+            content: "💕 ";
+        }
+
+        .mystery .genre-title::before {
+            content: "🔍 ";
+        }
+
+        .self-help .genre-title::before {
+            content: "💪 ";
+        }
+
+        .travel .genre-title::before {
+            content: "✈ ";
+        }
+
+
+
+        .coffee-cup {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 3rem;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .books-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            .cafe-sign {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Café Bliss</h1>
-    <p>Your Daily Dose of Fresh Brew & Bliss</p>
-  </header>
+    <div class="cafe-display">
+        <div class="display-header">
+            <div class="cafe-sign">☕ Grab a Coffee & a Good Read 📚</div>
+        </div>
+        
+        <div class="books-container">
+            <!-- Romance Section -->
+            <div class="genre-section romance">
+                <h2 class="genre-title">Romance</h2>
+                <div class="book-item">
+                    <div class="book-title">The Love Hypothesis</div>
+                    <div class="book-author">by Ali Hazelwood</div>
+                    <div class="book-description">A brilliant scientist discovers that love might be the most unpredictable experiment of all.</div>
+                </div>
+                <div class="book-item">
+                    <div class="book-title">Beach Read</div>
+                    <div class="book-author">by Emily Henry</div>
+                    <div class="book-description">Two rival authors spend the summer writing each other's stories and falling in love.</div>
+                </div>
+                <div class="book-item">
+                    <div class="book-title">The Seven Husbands of Evelyn Hugo</div>
+                    <div class="book-author">by Taylor Jenkins Reid</div>
+                    <div class="book-description">A legendary actress reveals the truth about her scandalous life and seven marriages.</div>
+                </div>
+            </div>
 
-  <section>
-    <h2>Welcome to Our Café!</h2>
-    <p>Serving happiness in every sip. Drop by to enjoy our signature blends, cozy ambiance, and delightful treats.</p>
-    <a class="btn" href="#">See Our Menu</a>
-  </section>
+            <!-- Mystery Section -->
+            <div class="genre-section mystery">
+                <h2 class="genre-title">Mystery</h2>
+                <div class="book-item">
+                    <div class="book-title">The Silent Patient</div>
+                    <div class="book-author">by Alex Michaelides</div>
+                    <div class="book-description">A woman shoots her husband and then never speaks again - a criminal psychologist tries to uncover why.</div>
+                </div>
+                <div class="book-item">
+                    <div class="book-title">Gone Girl</div>
+                    <div class="book-author">by Gillian Flynn</div>
+                    <div class="book-description">A woman disappears on her fifth wedding anniversary, leaving behind a diary that reveals dark secrets.</div>
+                </div>
+                <div class="book-item">
+                    <div class="book-title">The Guest List</div>
+                    <div class="book-author">by Lucy Foley</div>
+                    <div class="book-description">A wedding celebration on a remote island turns deadly when someone is murdered.</div>
+                </div>
+            </div>
 
-  <footer>
-    © 2025 Café Bliss. Crafted with ❤️ in Coimbatore.
-  </footer>
+            <!-- Self-Help Section -->
+            <div class="genre-section self-help">
+                <h2 class="genre-title">Self-Help</h2>
+                <div class="book-item">
+                    <div class="book-title">Atomic Habits</div>
+                    <div class="book-author">by James Clear</div>
+                    <div class="book-description">Learn how tiny changes in behavior can create remarkable results in your life.</div>
+                </div>
+                <div class="book-item">
+                    <div class="book-title">The Subtle Art of Not Giving a F*ck</div>
+                    <div class="book-author">by Mark Manson</div>
+                    <div class="book-description">A counterintuitive approach to living a good life by caring about what truly matters.</div>
+                </div>
+                <div class="book-item">
+                    <div class="book-title">Mindset: The New Psychology of Success</div>
+                    <div class="book-author">by Carol S. Dweck</div>
+                    <div class="book-description">Discover how your mindset can transform your approach to learning and success.</div>
+                </div>
+            </div>
+
+            <!-- Travel Section -->
+            <div class="genre-section travel">
+                <h2 class="genre-title">Travel</h2>
+                <div class="book-item">
+                    <div class="book-title">Eat, Pray, Love</div>
+                    <div class="book-author">by Elizabeth Gilbert</div>
+                    <div class="book-description">One woman's search for everything across Italy, India, and Indonesia.</div>
+                </div>
+                <div class="book-item">
+                    <div class="book-title">Wild: From Lost to Found on the Pacific Crest Trail</div>
+                    <div class="book-author">by Cheryl Strayed</div>
+                    <div class="book-description">A powerful memoir of one woman's 1,100-mile solo hike that transformed her life.</div>
+                </div>
+                <div class="book-item">
+                    <div class="book-title">The Alchemist</div>
+                    <div class="book-author">by Paulo Coelho</div>
+                    <div class="book-description">A shepherd boy's journey to find a worldly treasure leads to a discovery of his personal legend.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="coffee-cup">☕</div>
+    </div>
 </body>
 </html>
